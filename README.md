@@ -1,4 +1,4 @@
-Visualize o ecommerce em https://lucascanutoo.github.io/ecommerce-loja-de-sobremesas/
+Visualize o ecommerce em https://lucascanutoo.github.io/ecommerce-loja-de-sobremesas/frontend
 
 Ecommerce com funções de adicionar e remover itens ao carrinho e finalizar compra, em breve atualizações adicionando mais funções no backend.
 
