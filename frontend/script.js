@@ -4,12 +4,14 @@ function updateCart() {
   const cartContainer = document.getElementById("cart-items");
   const totalElement = document.getElementById("total");
   const cartTitle = document.querySelector("aside h2");
+  const checkoutBtn = document.getElementById("checkoutBtn");
 
   cartContainer.innerHTML = "";
 
   if (cart.length === 0) {
     cartContainer.innerHTML = "<p>Seu carrinho está vazio.</p>";
     totalElement.textContent = "";
+    checkoutBtn.style.display = "none";
   } else {
     let total = 0;
     cart.forEach((item, index) => {
@@ -22,11 +24,12 @@ function updateCart() {
           <strong>${item.name}</strong><br>
           <span>$${item.price.toFixed(2)}</span>
         </div>
-        <button onclick="removeItem(${index})">✖</button>
+        <button aria-label="Remover item do carrinho" onclick="removeItem(${index})" title="Remover item">🗑️</button>
       `;
       cartContainer.appendChild(itemBox);
     });
     totalElement.textContent = "Total: $" + total.toFixed(2);
+    checkoutBtn.style.display = "block";
   }
 
   cartTitle.textContent = `Seu carrinho (${cart.length})`;
@@ -36,6 +39,7 @@ function updateCart() {
 function removeItem(index) {
   cart.splice(index, 1);
   updateCart();
+  showAlert("Item removido do carrinho!");
 }
 
 function finalizarCompra() {
@@ -45,6 +49,7 @@ function finalizarCompra() {
   updateCart();
 }
 
+// Adiciona produto ao carrinho
 document.querySelectorAll('.product button').forEach((button) => {
   button.addEventListener('click', () => {
     const card = button.closest('.product');
@@ -56,12 +61,19 @@ document.querySelectorAll('.product button').forEach((button) => {
     updateCart();
 
     button.textContent = "✅ Adicionado!";
-    setTimeout(() => button.textContent = "🛒 Adicionar ao carrinho", 1000);
+    button.disabled = true;
+    setTimeout(() => {
+      button.textContent = "🛒 Adicionar ao carrinho";
+      button.disabled = false;
+    }, 1000);
+
+    showAlert("Produto adicionado ao carrinho!");
   });
 });
 
 updateCart();
 
+// Alerta bonito
 function showAlert(message) {
   const alertBox = document.getElementById("alert-box");
   const alertText = document.getElementById("alert-message");
@@ -70,5 +82,5 @@ function showAlert(message) {
 
   setTimeout(() => {
     alertBox.classList.add("hidden");
-  }, 3000); // esconde após 3s
+  }, 2800); // Esconde após 2.8s
 }
